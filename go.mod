@@ -1,4 +1,4 @@
-module github.com/ryudb/go-ryu
+module github.com/ed-visible/go-kuzu
 
 go 1.20
 

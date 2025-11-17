@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/ryudb/go-ryu"
+	ryu "github.com/ed-visible/go-kuzu"
 )
 
 func main() {
