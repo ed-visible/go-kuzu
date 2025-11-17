@@ -1,4 +1,4 @@
-package kuzu
+package ryu
 
 import (
 	"database/sql"
@@ -14,7 +14,7 @@ func TestDriver(t *testing.T) {
 	// Normalize the path for Windows
 	dbPath = strings.ReplaceAll(dbPath, "\\", "/")
 	t.Log("Test database path: " + dbPath)
-	cc, err := sql.Open(Name, fmt.Sprintf("kuzu://%s", dbPath))
+	cc, err := sql.Open(Name, fmt.Sprintf("ryu://%s", dbPath))
 	if nil != err {
 		t.Error(err)
 		return

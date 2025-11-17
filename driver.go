@@ -1,4 +1,4 @@
-package kuzu
+package ryu
 
 import (
 	"context"
@@ -21,7 +21,7 @@ func init() {
 	sql.Register(Name, &sqlDriver{cc: map[string]driver.Connector{}})
 }
 
-const Name = "kuzu"
+const Name = "ryu"
 
 type Finalizer interface {
 	Close()
@@ -51,7 +51,7 @@ type sqlDriver struct {
 	cc map[string]driver.Connector
 }
 
-// OpenConnector kuzu://path?poolSize=1024&threads=1024&dbSize=1024&compression=1&readOnly=1
+// OpenConnector ryu://path?poolSize=1024&threads=1024&dbSize=1024&compression=1&readOnly=1
 func (that *sqlDriver) OpenConnector(dsn string) (driver.Connector, error) {
 	u, err := url.Parse(dsn)
 	if nil != err {

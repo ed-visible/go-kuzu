@@ -1,14 +1,14 @@
-package kuzu
+package ryu
 
-// #include "kuzu.h"
+// #include "ryu.h"
 // #include <stdlib.h>
 import "C"
 
-// PreparedStatement represents a prepared statement in Kuzu, which can be
+// PreparedStatement represents a prepared statement in Ryu, which can be
 // used to execute a query with parameters.
 // PreparedStatement is returned by the `Prepare` method of Connection.
 type PreparedStatement struct {
-	cPreparedStatement C.kuzu_prepared_statement
+	cPreparedStatement C.ryu_prepared_statement
 	connection         *Connection
 	isClosed           bool
 }
@@ -19,6 +19,6 @@ func (stmt *PreparedStatement) Close() {
 	if stmt.isClosed {
 		return
 	}
-	C.kuzu_prepared_statement_destroy(&stmt.cPreparedStatement)
+	C.ryu_prepared_statement_destroy(&stmt.cPreparedStatement)
 	stmt.isClosed = true
 }

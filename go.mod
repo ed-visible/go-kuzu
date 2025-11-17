@@ -1,4 +1,4 @@
-module github.com/kuzudb/go-kuzu
+module github.com/ryudb/go-ryu
 
 go 1.20
 

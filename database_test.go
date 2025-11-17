@@ -1,4 +1,4 @@
-package kuzu
+package ryu
 
 import (
 	"path/filepath"

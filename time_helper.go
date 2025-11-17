@@ -1,6 +1,6 @@
-package kuzu
+package ryu
 
-// #include "kuzu.h"
+// #include "ryu.h"
 // #include <stdlib.h>
 import "C"
 
@@ -14,36 +14,36 @@ func unixEpoch() time.Time {
 	return time.Unix(0, 0)
 }
 
-// timeToKuzuDate converts a time.Time to a kuzu_date_t.
-func timeToKuzuDate(inputTime time.Time) C.kuzu_date_t {
+// timeToRyuDate converts a time.Time to a ryu_date_t.
+func timeToRyuDate(inputTime time.Time) C.ryu_date_t {
 	diff := inputTime.Sub(unixEpoch())
 	diffDays := math.Floor(diff.Hours() / 24)
-	cKuzuDate := C.kuzu_date_t{}
-	cKuzuDate.days = C.int32_t(diffDays)
-	return cKuzuDate
+	cRyuDate := C.ryu_date_t{}
+	cRyuDate.days = C.int32_t(diffDays)
+	return cRyuDate
 }
 
-// kuzuDateToTime converts a kuzu_date_t to a time.Time in UTC.
-func kuzuDateToTime(cKuzuDate C.kuzu_date_t) time.Time {
-	diff := time.Duration(cKuzuDate.days) * 24 * time.Hour
+// ryuDateToTime converts a ryu_date_t to a time.Time in UTC.
+func ryuDateToTime(cRyuDate C.ryu_date_t) time.Time {
+	diff := time.Duration(cRyuDate.days) * 24 * time.Hour
 	return unixEpoch().UTC().Add(diff)
 }
 
-// timeToKuzuTimestamp converts a time.Time to a kuzu_timestamp_t.
-func timeToKuzuTimestamp(inputTime time.Time) C.kuzu_timestamp_t {
+// timeToRyuTimestamp converts a time.Time to a ryu_timestamp_t.
+func timeToRyuTimestamp(inputTime time.Time) C.ryu_timestamp_t {
 	nanoseconds := inputTime.UnixNano()
 	microseconds := nanoseconds / 1000
-	cKuzuTime := C.kuzu_timestamp_t{}
-	cKuzuTime.value = C.int64_t(microseconds)
-	return cKuzuTime
+	cRyuTime := C.ryu_timestamp_t{}
+	cRyuTime.value = C.int64_t(microseconds)
+	return cRyuTime
 }
 
-// timeToKuzuTimestampNs converts a time.Time to a kuzu_timestamp_ns_t.
-func timeToKuzuTimestampNs(inputTime time.Time) C.kuzu_timestamp_ns_t {
+// timeToRyuTimestampNs converts a time.Time to a ryu_timestamp_ns_t.
+func timeToRyuTimestampNs(inputTime time.Time) C.ryu_timestamp_ns_t {
 	nanoseconds := inputTime.UnixNano()
-	cKuzuTime := C.kuzu_timestamp_ns_t{}
-	cKuzuTime.value = C.int64_t(nanoseconds)
-	return cKuzuTime
+	cRyuTime := C.ryu_timestamp_ns_t{}
+	cRyuTime.value = C.int64_t(nanoseconds)
+	return cRyuTime
 }
 
 // timeHasNanoseconds returns true if the time.Time has non-zero nanoseconds.
@@ -51,20 +51,20 @@ func timeHasNanoseconds(inputTime time.Time) bool {
 	return inputTime.Nanosecond() != 0
 }
 
-// durationToKuzuInterval converts a time.Duration to a kuzu_interval_t.
-func durationToKuzuInterval(inputDuration time.Duration) C.kuzu_interval_t {
+// durationToRyuInterval converts a time.Duration to a ryu_interval_t.
+func durationToRyuInterval(inputDuration time.Duration) C.ryu_interval_t {
 	microseconds := inputDuration.Microseconds()
 
-	cKuzuInterval := C.kuzu_interval_t{}
-	cKuzuInterval.micros = C.int64_t(microseconds)
-	return cKuzuInterval
+	cRyuInterval := C.ryu_interval_t{}
+	cRyuInterval.micros = C.int64_t(microseconds)
+	return cRyuInterval
 }
 
-// kuzuIntervalToDuration converts a kuzu_interval_t to a time.Duration.
-func kuzuIntervalToDuration(cKuzuInterval C.kuzu_interval_t) time.Duration {
-	days := cKuzuInterval.days
-	months := cKuzuInterval.months
-	microseconds := cKuzuInterval.micros
+// ryuIntervalToDuration converts a ryu_interval_t to a time.Duration.
+func ryuIntervalToDuration(cRyuInterval C.ryu_interval_t) time.Duration {
+	days := cRyuInterval.days
+	months := cRyuInterval.months
+	microseconds := cRyuInterval.micros
 	totalDays := int64(days) + int64(months)*30
 	totalSeconds := totalDays * 24 * 60 * 60
 	totalMicroseconds := totalSeconds*1000000 + int64(microseconds)
